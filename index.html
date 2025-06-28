@@ -2,74 +2,127 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gesiele Nails Designer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background: #000;
-      color: white;
+      color: #fff;
       text-align: center;
-      padding: 20px;
+    }
+
+    .header {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      background-color: #000;
+    }
+
+    .logo-bg {
+      width: 250px;
+      height: auto;
+      margin-top: 20px;
+    }
+
+    .curva-preta {
+      position: absolute;
+      bottom: -40px;
+      width: 100%;
+      height: 100px;
+      background: #000;
+      border-top-left-radius: 100% 50px;
+      border-top-right-radius: 100% 50px;
+      z-index: 1;
+    }
+
+    .avatar-wrapper {
+      position: absolute;
+      bottom: -75px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #000;
+      padding: 6px;
+      border-radius: 50%;
+      box-shadow: 0 0 25px rgba(200, 157, 0, 0.9); /* tom dourado */
+      z-index: 2;
     }
 
     .avatar {
-      width: 140px;
-      height: 140px;
+      width: 130px;
+      height: 130px;
       border-radius: 50%;
-      margin: 20px auto 0;
       object-fit: cover;
       object-position: top center;
-      display: block;
-      box-shadow: 0 0 8px rgba(255, 105, 180, 0.6); /* rosa suave */
     }
 
-    h1 {
-      margin: 20px 0 10px;
-      font-size: 24px;
+    .content {
+      margin-top: 90px;
+      padding: 0 20px 40px;
     }
 
     p {
-      font-size: 16px;
+      margin: 10px 0 30px;
       color: #ccc;
-      margin-bottom: 30px;
-      padding: 0 10px;
+      font-size: 15px;
     }
 
     .link-button {
-      display: block;
-      background-color: #1e1e1e;
-      color: white;
-      text-decoration: none;
-      padding: 15px;
-      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      max-width: 320px;
       margin: 15px auto;
-      max-width: 300px;
+      padding: 15px;
+      background: linear-gradient(145deg, #ffd866, #c89d00);
+      color: #000;
+      border-radius: 30px;
+      text-decoration: none;
       font-size: 16px;
-      transition: background 0.3s, transform 0.2s;
+      font-weight: bold;
+      box-shadow: 0 0 6px rgba(255, 215, 0, 0.5), inset 0 1px 3px #fff;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .link-button:hover {
-      background-color: #333;
-      transform: scale(1.02);
+      transform: scale(1.03);
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.8), inset 0 1px 5px #fff;
+    }
+
+    .link-button i {
+      font-size: 18px;
     }
   </style>
 </head>
 <body>
 
-  <img src="avatar.jpeg" alt="Foto do Gesiele Nails Designer" class="avatar" />
-  
-  <h1>Gesiele Nails Designer</h1>
+  <div class="header">
+    <img src="logo.png" class="logo-bg" alt="Logo Gesiele Nails">
+    <div class="curva-preta"></div>
+    <div class="avatar-wrapper">
+      <img src="avatar.jpeg" class="avatar" alt="Gesiele Nails">
+    </div>
+  </div>
 
-  <p>
-    Aqui você vai saber tudo sobre nossos serviços, agenda, valores e como entrar em contato.
-  </p>
+  <div class="content">
+    <p><strong>Descubra o poder de unhas bem feitas com um toque de exclusividade</strong></p>
 
-  <a class="link-button" href="https://wa.me/55SEUNUMERO" target="_blank">WhatsApp</a>
-  <a class="link-button" href="https://agenda.com/tijuca" target="_blank">Informações</a>
-  <a class="link-button" href="https://palestras.com/reidasunhas" target="_blank">Valores e Modelos</a>
-  <a class="link-button" href="https://palestras.com/reidasunhas" target="_blank">Localização</a>
+    <a class="link-button" href="https://wa.me/5562993200697" target="_blank">
+      <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+    <a class="link-button" href="https://agenda.com/tijuca" target="_blank">
+      <i class="fas fa-calendar-alt"></i> Informações
+    </a>
+    <a class="link-button" href="valores.jpg" target="_blank">
+      <i class="fas fa-tags"></i> Valores e Modelos
+    </a>    
+    <a class="link-button" href="https://maps.app.goo.gl/6CcLyhm8P2YPvDZQ6" target="_blank">
+      <i class="fas fa-map-marker-alt"></i> Localização
+    </a>
+  </div>
 
 </body>
 </html>
