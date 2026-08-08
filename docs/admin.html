@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#272128">
+  <title>Administração | Gesiele Nails</title>
+  <link rel="icon" href="assets/img/favicon.svg?v=7362d03df3e0" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/admin.css?v=7362d03df3e0">
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="assets/js/supabase-config.js?v=7362d03df3e0"></script>
+  <script defer src="assets/js/supabase-client.js?v=7362d03df3e0"></script>
+  <script defer src="assets/js/admin.js?v=7362d03df3e0"></script>
+</head>
+<body>
+  <div class="admin-shell">
+    <header class="admin-topbar">
+      <a class="admin-brand" href="index.html" aria-label="Voltar ao site">
+        <span>GN</span>
+        <strong>Gesiele Nails</strong>
+      </a>
+      <div class="admin-topbar__actions">
+        <span class="admin-user" data-admin-user hidden></span>
+        <a class="admin-link" href="index.html">Ver site</a>
+        <button class="admin-link" type="button" data-admin-logout hidden>Sair</button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <section class="admin-auth" data-config-view hidden>
+        <div class="admin-auth__panel">
+          <span class="admin-kicker">Configuração</span>
+          <h1>Conecte o banco de dados</h1>
+          <p>Preencha a URL e a chave pública do Supabase em <code>static/js/supabase-config.js</code> para ativar o painel.</p>
+        </div>
+      </section>
+
+      <section class="admin-auth" data-auth-view hidden>
+        <form class="admin-auth__panel" data-login-form>
+          <span class="admin-kicker">Área restrita</span>
+          <h1>Acessar administração</h1>
+          <p>Entre com o usuário autorizado para gerenciar os catálogos.</p>
+          <label>E-mail<input type="email" name="email" autocomplete="username" required></label>
+          <label>Senha<input type="password" name="password" autocomplete="current-password" minlength="6" required></label>
+          <button class="admin-button admin-button--primary" type="submit">Entrar</button>
+          <p class="admin-form-message" data-login-message role="status"></p>
+        </form>
+      </section>
+
+      <section class="admin-workspace" data-admin-view hidden>
+        <div class="admin-heading">
+          <div><span class="admin-kicker">Conteúdo do site</span><h1>Painel administrativo</h1></div>
+          <span class="admin-sync" data-admin-sync>Atualizado agora</span>
+        </div>
+
+        <div class="admin-tabs" role="tablist" aria-label="Seções administrativas">
+          <button class="admin-tab is-active" type="button" role="tab" aria-selected="true" data-admin-tab="home">Página inicial</button>
+          <button class="admin-tab" type="button" role="tab" aria-selected="false" data-admin-tab="pricing">Valores</button>
+          <button class="admin-tab" type="button" role="tab" aria-selected="false" data-admin-tab="models">Modelos</button>
+          <button class="admin-tab" type="button" role="tab" aria-selected="false" data-admin-tab="colors">Cores de gel</button>
+        </div>
+
+        <section class="admin-panel is-active" role="tabpanel" data-admin-panel="home">
+          <div class="admin-section-heading">
+            <div><h2>Imagem de destaque</h2><p>Atualize a foto exibida no cartão principal da página inicial.</p></div>
+          </div>
+
+          <form class="admin-home-form" data-home-form>
+            <div class="admin-home-grid">
+              <div class="admin-home-preview" data-home-preview>
+                <img alt="Prévia da imagem de destaque da página inicial" data-home-preview-image hidden>
+                <div class="admin-home-placeholder" data-home-placeholder>
+                  <div class="admin-home-nails" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+                  <strong>Ilustração padrão</strong>
+                </div>
+              </div>
+              <div class="admin-home-controls">
+                <label>Nova foto<input type="file" name="hero_image" accept="image/jpeg,image/png,image/webp"><small>JPG, PNG ou WebP de até 5 MB. Prefira uma foto vertical e bem iluminada.</small></label>
+                <p class="admin-home-note">A foto será recortada automaticamente para se adaptar ao cartão em celulares e computadores.</p>
+                <p class="admin-migration-note" data-home-migration hidden>Execute a migração <code>supabase/migrations/20260808_add_home_settings.sql</code> no SQL Editor do Supabase para ativar este recurso.</p>
+                <p class="admin-form-message" data-home-form-message role="status"></p>
+                <div class="admin-home-actions">
+                  <button class="admin-button admin-button--danger" type="button" data-remove-home-image>Usar ilustração padrão</button>
+                  <button class="admin-button admin-button--primary" type="submit" data-label="Salvar nova foto">Salvar nova foto</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <section class="admin-panel" role="tabpanel" data-admin-panel="pricing" hidden>
+          <div class="admin-section-heading">
+            <div><h2>Tabela de valores</h2><p>Organize categorias e serviços exibidos na página de valores.</p></div>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection__heading"><h3>Categorias</h3><button class="admin-button" type="button" data-add-category>+ Categoria</button></div>
+            <div class="admin-list" data-category-list aria-live="polite"></div>
+          </div>
+
+          <div class="admin-subsection">
+            <div class="admin-subsection__heading">
+              <h3>Serviços e preços</h3>
+              <div class="admin-inline-actions">
+                <select aria-label="Filtrar serviços por categoria" data-price-category-filter></select>
+                <button class="admin-button" type="button" data-add-price>+ Serviço</button>
+              </div>
+            </div>
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <thead><tr><th>Serviço</th><th>Categoria</th><th>Valor</th><th>Status</th><th><span class="sr-only">Ações</span></th></tr></thead>
+                <tbody data-price-list></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-panel" role="tabpanel" data-admin-panel="models" hidden>
+          <div class="admin-section-heading">
+            <div><h2>Modelos de unhas</h2><p>Adicione técnicas, descrições e fotos reais do portfólio.</p></div>
+            <button class="admin-button admin-button--primary" type="button" data-add-model>+ Novo modelo</button>
+          </div>
+          <div class="admin-model-list" data-model-list aria-live="polite"></div>
+        </section>
+
+        <section class="admin-panel" role="tabpanel" data-admin-panel="colors" hidden>
+          <div class="admin-section-heading">
+            <div><h2>Cores de gel</h2><p>Gerencie nomes, códigos, coleções e acabamentos.</p></div>
+            <button class="admin-button admin-button--primary" type="button" data-add-color>+ Nova cor</button>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>Cor</th><th>Código</th><th>Coleção</th><th>Acabamento</th><th>Status</th><th><span class="sr-only">Ações</span></th></tr></thead>
+              <tbody data-color-list></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <dialog class="admin-dialog" data-color-dialog>
+    <form method="dialog" data-color-form>
+      <header><div><span class="admin-kicker">Cores de gel</span><h2 data-color-dialog-title>Nova cor</h2></div><button class="admin-icon-button" type="button" aria-label="Fechar" data-close-dialog>×</button></header>
+      <input type="hidden" name="id">
+      <div class="admin-form-grid">
+        <label>Nome<input name="name" maxlength="80" required></label>
+        <label>Código<input name="code" maxlength="30" required></label>
+        <label>Cor de referência<span class="admin-color-input"><input type="color" name="hex_picker" value="#d9a6a6" aria-label="Selecionar cor"><input name="hex" value="#d9a6a6" pattern="#[0-9A-Fa-f]{6}" maxlength="7" required></span></label>
+        <label>Acabamento<input name="finish" maxlength="60" required></label>
+        <label>Coleção<input name="collection" maxlength="60" required></label>
+        <label>Ordem<input type="number" name="sort_order" min="0" step="1" value="0" required></label>
+      </div>
+      <label class="admin-check"><input type="checkbox" name="is_active" checked><span>Exibir no site</span></label>
+      <p class="admin-form-message" data-color-form-message role="status"></p>
+      <footer><button class="admin-button" type="button" data-close-dialog>Cancelar</button><button class="admin-button admin-button--primary" type="submit">Salvar cor</button></footer>
+    </form>
+  </dialog>
+
+  <dialog class="admin-dialog" data-model-dialog>
+    <form method="dialog" data-model-form>
+      <header><div><span class="admin-kicker">Portfólio</span><h2 data-model-dialog-title>Novo modelo</h2></div><button class="admin-icon-button" type="button" aria-label="Fechar" data-close-dialog>×</button></header>
+      <input type="hidden" name="id">
+      <input type="hidden" name="current_image_url">
+      <input type="hidden" name="current_image_path">
+      <div class="admin-form-grid">
+        <label>Nome do modelo<input name="title" maxlength="100" required></label>
+        <label>Categoria<select name="category" required></select></label>
+        <label data-model-new-category hidden>Nova categoria<input name="new_category" maxlength="60"></label>
+        <label class="admin-field--full">Descrição<textarea name="description" rows="3" maxlength="400" required></textarea></label>
+        <label class="admin-field--full">Foto do modelo<input type="file" name="image" accept="image/jpeg,image/png,image/webp"><small>JPG, PNG ou WebP de até 5 MB.</small></label>
+        <div class="admin-image-preview admin-field--full" data-model-preview hidden><img alt="Prévia da foto selecionada"></div>
+        <label>Ordem<input type="number" name="sort_order" min="0" step="1" value="0" required></label>
+      </div>
+      <label class="admin-check"><input type="checkbox" name="is_active" checked><span>Exibir no site</span></label>
+      <p class="admin-form-message" data-model-form-message role="status"></p>
+      <footer><button class="admin-button" type="button" data-close-dialog>Cancelar</button><button class="admin-button admin-button--primary" type="submit">Salvar modelo</button></footer>
+    </form>
+  </dialog>
+
+  <dialog class="admin-dialog" data-category-dialog>
+    <form method="dialog" data-category-form>
+      <header><div><span class="admin-kicker">Tabela de valores</span><h2 data-category-dialog-title>Nova categoria</h2></div><button class="admin-icon-button" type="button" aria-label="Fechar" data-close-dialog>×</button></header>
+      <input type="hidden" name="id">
+      <div class="admin-form-grid">
+        <label>Nome<input name="name" maxlength="80" required></label>
+        <label>Ordem<input type="number" name="sort_order" min="0" step="1" value="0" required></label>
+        <label class="admin-field--full">Subtítulo<input name="subtitle" maxlength="180"></label>
+      </div>
+      <label class="admin-check"><input type="checkbox" name="is_active" checked><span>Exibir no site</span></label>
+      <p class="admin-form-message" data-category-form-message role="status"></p>
+      <footer><button class="admin-button" type="button" data-close-dialog>Cancelar</button><button class="admin-button admin-button--primary" type="submit">Salvar categoria</button></footer>
+    </form>
+  </dialog>
+
+  <dialog class="admin-dialog" data-price-dialog>
+    <form method="dialog" data-price-form>
+      <header><div><span class="admin-kicker">Tabela de valores</span><h2 data-price-dialog-title>Novo serviço</h2></div><button class="admin-icon-button" type="button" aria-label="Fechar" data-close-dialog>×</button></header>
+      <input type="hidden" name="id">
+      <div class="admin-form-grid">
+        <label>Serviço<input name="service" maxlength="120" required></label>
+        <label>Categoria<select name="category_id" required></select></label>
+        <label>Valor (R$)<input type="number" name="price" min="0" step="0.01" inputmode="decimal" required></label>
+        <label>Ordem<input type="number" name="sort_order" min="0" step="1" value="0" required></label>
+        <label class="admin-field--full">Observação<input name="note" maxlength="300"></label>
+      </div>
+      <label class="admin-check"><input type="checkbox" name="is_active" checked><span>Exibir no site</span></label>
+      <p class="admin-form-message" data-price-form-message role="status"></p>
+      <footer><button class="admin-button" type="button" data-close-dialog>Cancelar</button><button class="admin-button admin-button--primary" type="submit">Salvar serviço</button></footer>
+    </form>
+  </dialog>
+
+  <div class="admin-toast" data-admin-toast role="status" hidden></div>
+</body>
+</html>
